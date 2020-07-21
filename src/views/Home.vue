@@ -44,7 +44,7 @@ export default {
   data: () => {
     return {
       categories: [],
-      category: null
+      category: 0
     };
   },
   components: {},
@@ -52,7 +52,7 @@ export default {
     trivia_api
       .getCategories()
       .then(response => {
-        this.categories = [{ id: null, name: "All" }].concat(response);
+        this.categories = [{ id: 0, name: "All" }].concat(response);
       })
       .then(() => console.log(this.categories[0].name));
   },

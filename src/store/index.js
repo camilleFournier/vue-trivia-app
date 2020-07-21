@@ -5,17 +5,30 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    category: null,
-    questions: [],
+    category: 0,
+    quizz: [],
     score: 0,
-    current: 0,
   },
   getters: {
-    getCategory: state => state.category
+    getCategory: state => state.category,
+    getNextQuestion: (state) => (index) => {
+      console.log(state.quizz[index]);
+      return (state.quizz[index]);
+    }
   },
   mutations: {
     SET_CATEGORY (state, category) {
       state.category = category;
+    },
+    SET_QUIZZ (state, quizz) {
+      console.log(quizz);
+      state.quizz = quizz.map(item => {
+        return {
+          question: item.question,
+          answers: item.incorrect_answers.concat(item.correct_answer),
+          correct: item.correct_answer,
+        }
+      });
     }
   },
   actions: {},
