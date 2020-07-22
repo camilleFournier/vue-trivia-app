@@ -1,5 +1,14 @@
 import Vue from "vue";
-import Vuetify from "vuetify/lib";
+import Vuetify, {
+  VContainer,
+  VRow,
+  VCol,
+  VBtn,
+  VSelect,
+  VRadio,
+  VRadioGroup,
+  VProgressCircular,
+} from "vuetify/lib";
 
 Vue.use(Vuetify, {
   components: {
