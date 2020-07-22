@@ -1,8 +1,5 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-const Home = () => import("../views/Home.vue");
-const  Quizz = () => import("../views/Quizz.vue");
-const Score = () => import("../views/Score.vue");
 
 Vue.use(VueRouter);
 
@@ -10,30 +7,32 @@ const routes = [
   {
     path: "/",
     name: "Home",
-    component: Home
+    component: () => import("../views/Home.vue"),
   },
   {
     path: "/quizz",
     name: "Quizz",
-    component: Quizz
+    component: () => import("../views/Quizz.vue"),
   },
   {
     path: "/score",
     name: "Score",
-    component: Score,
+    component: () => import("../views/Score.vue"),
     beforeEnter: (to, from, next) => {
       if (from.name == "Quizz") {
         next();
       } else {
-        next('/');
+        next("/");
       }
-    }
+    },
   },
   {
     path: "*",
     name: "404",
-    beforeEnter: (to, from, next) => { next('/') }
-  }
+    beforeEnter: (to, from, next) => {
+      next("/");
+    },
+  },
 ];
 
 const router = new VueRouter({
