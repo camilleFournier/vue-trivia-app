@@ -1,8 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
-import Quizz from "../views/Quizz.vue";
-import Score from "../views/Score.vue";
+const Home = () => import("../views/Home.vue");
+const  Quizz = () => import("../views/Quizz.vue");
+const Score = () => import("../views/Score.vue");
 
 Vue.use(VueRouter);
 
@@ -20,15 +20,19 @@ const routes = [
   {
     path: "/score",
     name: "Score",
-    component: Score
-  },{
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
+    component: Score,
+    beforeEnter: (to, from, next) => {
+      if (from.name == "Quizz") {
+        next();
+      } else {
+        next('/');
+      }
+    }
+  },
+  {
+    path: "*",
+    name: "404",
+    beforeEnter: (to, from, next) => { next('/') }
   }
 ];
 
