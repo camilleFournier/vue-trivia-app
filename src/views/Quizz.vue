@@ -47,10 +47,12 @@ export default {
   
   methods: {
     next() {
-        // console.log(this.index);
+        console.log(this.index, this.answer);
+        this.$store.commit('SET_ANSWER', { index: this.index-1, answer: this.answer });
         if (this.index < 10) {
             this.quizzItem = this.$store.getters.getNextQuestion(this.index);
             this.index++;
+            this.answer = "";
         } else {
             this.$router.push('/score');
         }

@@ -14,7 +14,8 @@ export default new Vuex.Store({
     getNextQuestion: (state) => (index) => {
       console.log(state.quizz[index]);
       return (state.quizz[index]);
-    }
+    },
+    getScore: state => () => {return state.score},
   },
   mutations: {
     SET_CATEGORY (state, category) {
@@ -29,6 +30,12 @@ export default new Vuex.Store({
           correct: item.correct_answer,
         }
       });
+    },
+    SET_ANSWER(state, payload) {
+      console.log(payload.answer, state.quizz[payload.index].correct);
+      if (state.quizz[payload.index].correct == payload.answer) {
+        state.score++;
+      }
     }
   },
   actions: {},

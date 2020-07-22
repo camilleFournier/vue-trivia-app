@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Quizz from "../views/Quizz.vue";
+import Score from "../views/Score.vue";
 
 Vue.use(VueRouter);
 
@@ -17,6 +18,10 @@ const routes = [
     component: Quizz
   },
   {
+    path: "/score",
+    name: "Score",
+    component: Score
+  },{
     path: "/about",
     name: "About",
     // route level code-splitting
