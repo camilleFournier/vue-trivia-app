@@ -1,7 +1,18 @@
 import Vue from "vue";
 import Vuetify from "vuetify/lib";
 
-Vue.use(Vuetify);
+Vue.use(Vuetify, {
+  components: {
+    VContainer,
+    VRow,
+    VCol,
+    VBtn,
+    VSelect,
+    VRadio,
+    VRadioGroup,
+    VProgressCircular
+  }
+});
 
 export default new Vuetify({
   theme: {
@@ -11,5 +22,5 @@ export default new Vuetify({
         secondary: "#2c3e50"
       }
     }
-  }
+  },
 });
