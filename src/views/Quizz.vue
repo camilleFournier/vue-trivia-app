@@ -17,10 +17,11 @@
           <v-radio
             v-for="item in quizzItem.answers"
             :key="item"
-            :label="item"
             :value="item"
             color="primary"
-          ></v-radio>
+          >
+            <template slot="label"><span v-html="item"></span></template>
+          </v-radio>
         </v-radio-group>
       </v-row>
       <v-row>
@@ -69,10 +70,8 @@ export default {
     async next() {
       if (this.index < 10) {
         this.dataAvailable = false;
-        console.log(this.$store.state.quizz);
         this.$store.dispatch('GET_QUESTION', this.index-1)
           .then(quizzItem => {
-            console.log(quizzItem);
             this.quizzItem = quizzItem;
             this.answer = "";
             this.dataAvailable = true;

@@ -16,7 +16,7 @@
     <v-row>
       <v-col>
         <p>
-          This game is a Trivia quizz. To play, select a category (or not) and
+          This game is a Trivia quizz. To play, select a category (or not) and a language, then
           press start. You will have to answer 10 questions.
         </p>
       </v-col>
@@ -24,7 +24,7 @@
     <v-row>
       <v-col>
         <v-select
-          class="category-selector"
+          class="category selector"
           color="primary"
           :items="categories"
           label="Category"
@@ -33,6 +33,15 @@
           v-model="category"
         >
         </v-select>
+        <v-select
+          class="lang selector"
+          color="primary"
+          :items="langAvailable"
+          item-text="name"
+          item-value="id"
+          label="Language"
+          v-model="lang"
+        ></v-select>
       </v-col>
     </v-row>
     <v-row>
@@ -54,7 +63,9 @@ export default {
   data: () => {
     return {
       categories: [],
-      category: 0
+      category: 0,
+      langAvailable: [{name: "English", id: "en" }, { name: "Français", id: "fr"}],
+      lang: 'en',
     };
   },
   components: {},
@@ -72,7 +83,7 @@ export default {
   methods: {
     async startQuizz() {
       console.log(this.category);
-      this.$store.commit("SET_CATEGORY", this.category);
+      this.$store.commit("SET_PARAMETERS", { category: this.category, lang: this.lang });
       this.$router.push("/quizz");
     }
   }
@@ -83,7 +94,7 @@ export default {
 #home {
   text-align: center;
 }
-.category-selector {
+.selector {
   max-width: 30rem !important;
   margin: auto;
   /* margin: auto; */

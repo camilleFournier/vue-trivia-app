@@ -10,39 +10,34 @@ export default new Vuex.Store({
     category: 0,
     quizz: [],
     score: 0,
-    lang: 'fr',
+    lang: 'en',
     error: false,
     errorMsg: ""
   },
   getters: {
     getNextQuestion: state => index => {
-      console.log('getNextQuestion0', state.quizz);
-      console.log('getNextQuestion1', state.quizz[index].question);
       const answers = state.quizz[index].incorrect;
-      console.log('getNextQuestion2', state.quizz[ index ].question);
       const i = Math.floor(Math.random()*answers.length+1);
-      console.log('getNextQuestion3', state.quizz[ index ].question);
       answers.splice(i, 0, state.quizz[index].correct);
-      console.log('getNextQuestion4', state.quizz[index]);
       return {
         question: state.quizz[index].question,
         answers
       };
-    }
+    },
   },
   mutations: {
-    SET_CATEGORY(state, category) {
-      state.category = category;
+    SET_PARAMETERS(state, payload) {
+      state.category = payload.category;
+      state.lang = payload.lang;
     },
     SET_QUIZZ(state, quizz) {
-      console.log(quizz);
-      state.quizz = quizz;
+      console.log('set_quizz', quizz);
+      Vue.set(state, 'quizz', quizz);
     },
     //replace quizz item with translation
     REPLACE_QUESTION(state, payload) {
-      
-      state.quizz[payload.index] = payload.quizzItem;
-      console.log('replace_question', state.quizz);
+      // this is to make the change reactive
+      Vue.set(state.quizz, payload.index, payload.quizzItem);
     },
     SET_ANSWER(state, payload) {
       if (state.quizz[payload.index].correct == payload.answer) {
@@ -80,12 +75,9 @@ export default new Vuex.Store({
       });
     },
     TRANSLATE_QUESTION(context, index) {
-      //too many incorrect
-      console.log(context.state.quizz[ index ]);
-      mm_api.translate(context.state.quizz[index])
+      return mm_api.translate(context.state.quizz[index])
         .then(quizzItem => {
           context.commit('REPLACE_QUESTION', { index, quizzItem });
-          console.log('translate_question', context.state.quizz)
         })
         .catch((e) => {
           context.dispatch("CATCH_ERROR", e);
@@ -93,14 +85,12 @@ export default new Vuex.Store({
         });
     },
     GET_QUESTION(context, index) {
-      //too many incorrect
-      console.log(context.state.quizz[ index ]);
       return new Promise((resolve, reject) => {
         if (context.state.lang != "en") {
           console.log('frecnh');
           context.dispatch("TRANSLATE_QUESTION", index)
             .then(() => {
-              console.log('get_question', context.state.quizz);
+              console.log('get_question', context.state.quizz[0]);
               resolve(context.getters.getNextQuestion(index))
             })
             .catch(() => reject());
