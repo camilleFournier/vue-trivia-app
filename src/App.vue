@@ -24,12 +24,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-  .error {
-    /* position: absolute; */
-    /* top: 1rem; */
-    /* margin: auto; */
-    
-  }
-</style>

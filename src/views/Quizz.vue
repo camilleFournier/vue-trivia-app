@@ -9,7 +9,7 @@
       </v-row>
       <v-row>
         <v-col>
-          <h3 class="secondary--text">{{ quizzItem.question }}</h3>
+          <h3 v-html="quizzItem.question"></h3>
         </v-col>
       </v-row>
       <v-row>
@@ -24,7 +24,7 @@
         </v-radio-group>
       </v-row>
       <v-row>
-        <v-btn color="primary" @click="next()">Next</v-btn>
+        <v-btn color="primary" @click="submit()">Next</v-btn>
       </v-row>
     </v-container>
   </div>
@@ -48,30 +48,35 @@ export default {
   },
   components: {},
   async created() {
-    this.$store.dispatch("FETCH_QUIZZ").then(() => {
-      console.log(this.quizzItem);
-      this.quizzItem = this.$store.getters.getNextQuestion(this.index);
-      this.index = 1;
-      this.dataAvailable = true;
+    this.$store.dispatch("FETCH_QUIZZ")
+      .then(() => {
+        this.next();
+      // this.quizzItem = this.$store.getters.getNextQuestion(this.index);
+      // this.index = 1;
+      // this.dataAvailable = true;
     });
-    // this.category = this.$store.getters.getCategory;
-    // const quizz = await trivia_api.getQuizz(this.category);
-    // this.$store.commit('SET_QUIZZ', quizz);
-    // this.quizzItem = this.$store.getters.getNextQuestion(this.index);
-    // this.index++
   },
 
   methods: {
-    next() {
-      console.log(this.index, this.answer);
+    submit() {
       this.$store.commit("SET_ANSWER", {
-        index: this.index,
+        index: this.index-1,
         answer: this.answer
       });
+      this.index++;
+      this.next();
+    },
+    async next() {
       if (this.index < 10) {
-        this.index++;
-        this.quizzItem = this.$store.getters.getNextQuestion(this.index);
-        this.answer = "";
+        this.dataAvailable = false;
+        console.log(this.$store.state.quizz);
+        this.$store.dispatch('GET_QUESTION', this.index-1)
+          .then(quizzItem => {
+            console.log(quizzItem);
+            this.quizzItem = quizzItem;
+            this.answer = "";
+            this.dataAvailable = true;
+          });
       } else {
         this.$router.push("/score");
       }

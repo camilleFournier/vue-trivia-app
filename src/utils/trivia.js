@@ -18,18 +18,19 @@ async function getQuizz(category) {
       params: {
         amount: 10,
         type: "multiple",
-        encode: "base64",
         category
       }
     })
     .then(response => {
       switch (response.data.response_code) {
         case 0:
+          console.log(response.data.results);
           return response.data.results.map(item => {
+            console.log(item.incorrect_answers);
             return {
-              question: atob(item.question),
-              incorrect: item.incorrect_answers.map(a => atob(a)),
-              correct: atob(item.correct_answer)
+              question: item.question,
+              correct: item.correct_answer,
+              incorrect: item.incorrect_answers,
             };
           });
         case 1:
@@ -37,7 +38,6 @@ async function getQuizz(category) {
         case 2:
           throw new Error('Invalid parameters');
         default:
-          console.log(3);
           throw new Error('Token error');
 
       }

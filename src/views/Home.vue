@@ -15,7 +15,7 @@
     </v-row>
     <v-row>
       <v-col>
-        <p class="secondary--text">
+        <p>
           This game is a Trivia quizz. To play, select a category (or not) and
           press start. You will have to answer 10 questions.
         </p>
