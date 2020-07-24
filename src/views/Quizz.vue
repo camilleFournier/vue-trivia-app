@@ -4,7 +4,7 @@
     <v-container v-show="dataAvailable" fluid id="quizz">
       <v-row>
         <v-col>
-          <h1 class="primary--text">Question {{ index }}</h1>
+          <h1 class="primary--text">{{ $t("quizz.title", { index }) }}</h1>
         </v-col>
       </v-row>
       <v-row>
@@ -25,7 +25,7 @@
         </v-radio-group>
       </v-row>
       <v-row>
-        <v-btn color="primary" @click="submit()">Next</v-btn>
+        <v-btn color="primary" @click="submit()">{{ $t("quizz.btnNext")}}</v-btn>
       </v-row>
     </v-container>
   </div>

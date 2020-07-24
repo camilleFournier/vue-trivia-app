@@ -1,5 +1,4 @@
 <template>
-  <!-- <div id="home"> -->
   <v-container
     fluid
     fill-height
@@ -10,14 +9,13 @@
   >
     <v-row>
       <v-col>
-        <h1 class="primary--text">Welcome !</h1>
+        <h1 class="primary--text">{{ $t("home.title") }} !</h1>
       </v-col>
     </v-row>
     <v-row>
       <v-col>
         <p>
-          This game is a Trivia quizz. To play, select a category (or not) and a language, then
-          press start. You will have to answer 10 questions.
+          {{ $t("home.presentation") }}
         </p>
       </v-col>
     </v-row>
@@ -27,11 +25,11 @@
           class="category selector"
           color="primary"
           :items="categories"
-          label="Category"
           item-text="name"
           item-value="id"
           v-model="category"
         >
+          <template slot="label"><span>{{ $t('home.labelCategory') }}</span></template>
         </v-select>
         <v-select
           class="lang selector"
@@ -39,51 +37,51 @@
           :items="langAvailable"
           item-text="name"
           item-value="id"
-          label="Language"
           v-model="lang"
-        ></v-select>
+        >
+          <template slot="label">{{ $t("home.labelLanguage") }}</template>
+        </v-select>
       </v-col>
     </v-row>
     <v-row>
       <v-col>
-        <v-btn color="primary" @click="startQuizz()">Start !</v-btn>
+        <v-btn color="primary" @click="startQuizz()">{{ $t("home.btnStart") }} !</v-btn>
       </v-col>
     </v-row>
   </v-container>
-  <!-- </div> -->
 </template>
 
 <script>
-// @ is an alias to /src
-//import HelloWorld from "@/components/HelloWorld.vue";
-import { trivia_api } from "../utils/trivia.js";
+// import { trivia_api } from "../utils/trivia.js";
 
 export default {
   name: "Home",
   data: () => {
     return {
-      categories: [],
       category: 0,
-      langAvailable: [{name: "English", id: "en" }, { name: "Français", id: "fr"}],
-      lang: 'en',
+      lang: { name: "English", id: "en" }
     };
+  },
+  computed: {
+    langAvailable() { return  this.$store.state.langAvailable },
+    categories() { return this.$store.state.categoriesDisplayed }
+  },
+  watch: {
+    lang: function(newLang) {
+      console.log(newLang);
+      this.$store.commit('SET_LANG', newLang);
+      this.$i18n.locale = newLang;
+      this.$store.dispatch('TRANSLATE_CATEGORIES');
+    }
   },
   components: {},
   async beforeMount() {
-    trivia_api
-      .getCategories()
-      .then(response => {
-        this.categories = [{ id: 0, name: "All" }].concat(response);
-      })
-      .catch(e => {
-        console.log(e);
-        this.$store.dispatch('CATCH_ERROR', e.message);
-      })
+    this.$store.dispatch('FETCH_CATEGORIES');
   },
   methods: {
     async startQuizz() {
       console.log(this.category);
-      this.$store.commit("SET_PARAMETERS", { category: this.category, lang: this.lang });
+      this.$store.commit("SET_CATEGORY", this.category);
       this.$router.push("/quizz");
     }
   }

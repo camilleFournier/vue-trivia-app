@@ -1,0 +1,22 @@
+{
+    "home": {
+        "title": "Bienvenue",
+        "presentation": "Ce jeu est un quizz Trivia. Pour jouer, choisissez une catégorie (ou pas) et appuez sur commencer. Vous devrez répondre à 10 questions.",
+        "labelCategory": "Categorie",
+        "labelLanguage": "Langue",
+        "btnStart": "Commencer"
+    },
+    "quizz": {
+        "title": "Question {index}",
+        "btnNext": "Suivante"
+    },
+    "score": {
+        "title": "Score",
+        "text": "Dommage, vous avez obtenu seulement | Dommage, vous avez obtenu seulement | Félicitations ! Vous avez obtenu un score de ",
+        "score": "{score} point | {score} points",
+        "btnReset": "Recommencer",
+        "btnGoHome": "Changer les paramètres"
+    },
+    "error": "Une erreur s'est produite"
+    
+}

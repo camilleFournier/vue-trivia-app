@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-snackbar :value="error" color="#F44336" top>Something went wrong: {{ msg }}</v-snackbar>
+    <v-snackbar :value="error" color="#F44336" top>{{ $t("error") }}: {{ msg }}</v-snackbar>
     <router-view></router-view>
   </v-app>
 </template>
@@ -12,11 +12,13 @@ export default {
   name: "App",
   data: () => {
     return {
+      lang: { name: "English", id: "en" }
     };
   },
   computed: {
     error() { return this.$store.state.error; },
-    msg() { return this.$store.state.errorMsg; }
+    msg() { return this.$store.state.errorMsg; },
+    
   },
 
   components: {

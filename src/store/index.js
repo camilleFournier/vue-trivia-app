@@ -8,31 +8,49 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     category: 0,
+    lang: "en",
     quizz: [],
     score: 0,
-    lang: 'en',
     error: false,
-    errorMsg: ""
+    errorMsg: "",
+    categories: [],
+    categoriesDisplayed: [],
+    langAvailable: [
+      { name: "English", id: "en" },
+      { name: "Français", id: "fr" },
+    ],
   },
   getters: {
-    getNextQuestion: state => index => {
+    getNextQuestion: (state) => (index) => {
       const answers = state.quizz[index].incorrect;
-      const i = Math.floor(Math.random()*answers.length+1);
+      const i = Math.floor(Math.random() * answers.length + 1);
       answers.splice(i, 0, state.quizz[index].correct);
       return {
         question: state.quizz[index].question,
-        answers
+        answers,
       };
     },
   },
   mutations: {
-    SET_PARAMETERS(state, payload) {
-      state.category = payload.category;
-      state.lang = payload.lang;
+    SET_LANG(state, lang) {
+      console.log(lang);
+      state.lang = lang;
+      console.log(state.lang);
+    },
+    SET_CATEGORY(state, category) {
+      state.category = category;
+    },
+    SET_CATEGORIES(state, categories) {
+      Vue.set(state, "categories", categories);
+      Vue.set(state, "categoriesDisplayed", categories);
+    },
+    SET_CATEGORIES_DISPLAYED(state, categories) {
+      Vue.set(state, "categoriesDisplayed", categories);
+      console.log(state.categoriesDisplayed);
     },
     SET_QUIZZ(state, quizz) {
-      console.log('set_quizz', quizz);
-      Vue.set(state, 'quizz', quizz);
+      console.log("set_quizz", quizz);
+      Vue.set(state, "quizz", quizz);
     },
     //replace quizz item with translation
     REPLACE_QUESTION(state, payload) {
@@ -51,7 +69,7 @@ export default new Vuex.Store({
     RESET_ERROR(state) {
       state.error = false;
       state.errorMsg = "";
-    }
+    },
   },
   actions: {
     CATCH_ERROR(context, error) {
@@ -64,7 +82,7 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         trivia_api
           .getQuizz(context.state.category)
-          .then(quizz => {
+          .then((quizz) => {
             context.commit("SET_QUIZZ", quizz);
             resolve();
           })
@@ -74,10 +92,27 @@ export default new Vuex.Store({
           });
       });
     },
+    FETCH_CATEGORIES(context) {
+      return trivia_api
+        .getCategories()
+        .then((response) => {
+          context.commit(
+            "SET_CATEGORIES",
+            [{ id: 0, name: "All" }].concat(response)
+          );
+        })
+        .catch((e) => context.dispatch("CATCH_ERROR", e));
+    },
+    TRANSLATE_CATEGORIES(context) {
+      return mm_api
+        .translateCategories(context.state.categories)
+        .then((categories) => context.commit("SET_CATEGORIES_DISPLAYED", categories));
+    },
     TRANSLATE_QUESTION(context, index) {
-      return mm_api.translate(context.state.quizz[index])
-        .then(quizzItem => {
-          context.commit('REPLACE_QUESTION', { index, quizzItem });
+      return mm_api
+        .translateQuestion(context.state.quizz[index])
+        .then((quizzItem) => {
+          context.commit("REPLACE_QUESTION", { index, quizzItem });
         })
         .catch((e) => {
           context.dispatch("CATCH_ERROR", e);
@@ -86,20 +121,22 @@ export default new Vuex.Store({
     },
     GET_QUESTION(context, index) {
       return new Promise((resolve, reject) => {
+        console.log(context.state.lang);
         if (context.state.lang != "en") {
-          console.log('frecnh');
-          context.dispatch("TRANSLATE_QUESTION", index)
+          console.log("french");
+          context
+            .dispatch("TRANSLATE_QUESTION", index)
             .then(() => {
-              console.log('get_question', context.state.quizz[0]);
-              resolve(context.getters.getNextQuestion(index))
+              console.log("get_question", context.state.quizz[0]);
+              resolve(context.getters.getNextQuestion(index));
             })
             .catch(() => reject());
         } else {
-          console.log('english')
+          console.log("english");
           resolve(context.getters.getNextQuestion(index));
         }
-      })
-    }
+      });
+    },
   },
-  modules: {}
+  modules: {},
 });

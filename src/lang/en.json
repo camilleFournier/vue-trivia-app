@@ -1,0 +1,21 @@
+{
+    "home": {
+        "title": "Welcome",
+        "presentation": "This game is a Trivia quizz. To play, select a category (or not), then press start. You will have to answer 10 questions.",
+        "labelCategory": "Category",
+        "labelLanguage": "Language",
+        "btnStart": "Start"
+    },
+    "quizz": {
+        "title": "Question {index}",
+        "btnNext": "Next"
+    },
+    "score": {
+        "title": "Score",
+        "text": "Too bad, you only got | Too bad, you only got | Congratulations ! You achieved a score of",
+        "score": "{score} point | {score} points",
+        "btnReset": "Try again",
+        "btnGoHome": "Change settings"
+    },
+    "error": "Something went wrong"
+}

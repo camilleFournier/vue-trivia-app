@@ -3,26 +3,15 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./store";
 import vuetify from "./plugins/vuetify";
+import i18n from "./plugins/i18n";
 
 Vue.config.productionTip = false;
-
-
-// export default new Vuetify({
-//   theme: {
-//     themes: {
-//       light: {
-//         primary: "#42b983",
-//         secondary: "#2c3e50"
-//         // accent: "#8c9eff",
-//         // error: "#b71c1c",
-//       },
-//     },
-//   },
-// });
+// Vue.config.lang = 'en';
 
 new Vue({
+  render: (h) => h(App),
   router,
   store,
   vuetify,
-  render: h => h(App)
+  i18n,
 }).$mount("#app");

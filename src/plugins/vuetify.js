@@ -8,6 +8,7 @@ import Vuetify, {
   VRadio,
   VRadioGroup,
   VProgressCircular,
+  VDialog
 } from "vuetify/lib";
 
 Vue.use(Vuetify, {
@@ -19,7 +20,8 @@ Vue.use(Vuetify, {
     VSelect,
     VRadio,
     VRadioGroup,
-    VProgressCircular
+    VProgressCircular,
+    VDialog
   }
 });
 

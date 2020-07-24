@@ -10,7 +10,7 @@ const api = axios.create({
     }
 });
 
-async function translate(quizzItem) {
+async function translateQuestion(quizzItem) {
     //too many incorrect
     const q = `${quizzItem.question}|${quizzItem.incorrect.join("|")}|${quizzItem.correct}`;
     console.log(quizzItem);
@@ -32,6 +32,20 @@ async function translate(quizzItem) {
         })
 }
 
+async function translateCategories(categories) {
+    return api
+        .get('', {
+            params: {
+                langpair: "en|fr",
+                q: categories.map(cat => cat.name).join('|')
+            }
+        }).then(response => {
+            const translation = response.data.responseData.translatedText.split('|');
+            return categories.map((cat, index) => { return {id: cat.id, name: translation[index]}; })
+        })
+}
+
 export const mm_api = {
-    translate: translate 
+    translateQuestion: translateQuestion,
+    translateCategories: translateCategories
 };
