@@ -7,7 +7,8 @@
         "btnStart": "Start"
     },
     "quizz": {
-        "title": "Question {index}",
+        "title": "Quizz",
+        "subtitle": "Question {index}",
         "btnNext": "Next"
     },
     "score": {

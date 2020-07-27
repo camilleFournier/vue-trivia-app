@@ -60,7 +60,11 @@ export default new Vuex.Store({
     SET_ANSWER(state, payload) {
       if (state.quizz[payload.index].correct == payload.answer) {
         state.score++;
+        Object.assign(state.quizz[ payload.index ], { good_answer: true})
+      } else {
+        Object.assign(state.quizz[ payload.index ], { good_answer: false })
       }
+      console.log(state.quizz[payload.index]);
     },
     SET_ERROR(state, error) {
       state.error = true;
@@ -105,13 +109,13 @@ export default new Vuex.Store({
     },
     TRANSLATE_CATEGORIES(context) {
       return mm_api
-        .translateCategories(context.state.categories)
+        .translateCategories(context.state.categories, context.state.lang)
         .then((categories) => context.commit("SET_CATEGORIES_DISPLAYED", categories))
         .catch((e) => context.dispatch("CATCH_ERROR", e));
     },
     TRANSLATE_QUESTION(context, index) {
       return mm_api
-        .translateQuestion(context.state.quizz[index])
+        .translateQuestion(context.state.quizz[index], context.state.lang)
         .then((quizzItem) => {
           context.commit("REPLACE_QUESTION", { index, quizzItem });
         })
@@ -124,7 +128,6 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         console.log(context.state.lang);
         if (context.state.lang != "en") {
-          console.log("french");
           context
             .dispatch("TRANSLATE_QUESTION", index)
             .then(() => {
@@ -133,7 +136,6 @@ export default new Vuex.Store({
             })
             .catch(() => reject());
         } else {
-          console.log("english");
           resolve(context.getters.getNextQuestion(index));
         }
       });

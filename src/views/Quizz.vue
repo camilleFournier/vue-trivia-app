@@ -1,17 +1,22 @@
-<template>
+<template v-on:keydown.enter="submit()">
   <v-container fluid id="quizz">
     <v-row>
-      <h1 class="primary--text">Quizz</h1>
+      <h1 class="primary--text quizz-title">{{ $t("quizz.title") }}</h1>
     </v-row>
     <v-row>
       <v-col>
-        <v-progress-linear color="primary" height="30" :value="index*10">
-          <h3>{{ $t("quizz.title", { index }) }}</h3>
+        <v-progress-linear color="primary" height="30" :value="(index-1)*10">
+          <h3>{{ $t("quizz.subtitle", { index }) }}</h3>
         </v-progress-linear>
       </v-col>
     </v-row>
-    <v-row>
-      <v-col>
+    <v-row >
+      <v-col cols="12" order-sm="last" md="5" sm="4" align-self="center" class="countdown-col">
+        <v-progress-circular class="countdown" color="primary" size="48" rotate="-90" :value="100-countdown*10" >
+          <span>{{ countdown }}</span>
+        </v-progress-circular>
+      </v-col>
+      <v-col align-self="center" class="quizz-question">
         <v-progress-circular class="loading" indeterminate color="primary" size="48" v-show="!dataAvailable"></v-progress-circular>
         <v-container v-show="dataAvailable" fluid>
           <v-row>
@@ -19,7 +24,7 @@
               <h3 v-html="quizzItem.question"></h3>
             </v-col>
           </v-row>
-          <v-row>
+          <v-row> 
             <v-radio-group v-model="answer" column>
               <v-radio
                 v-for="item in quizzItem.answers"
@@ -33,14 +38,11 @@
           </v-row>
         </v-container>
       </v-col>
-      <v-col>
-        <v-progress-circular color="primary" size="48" rotate="-90" :value="100-countdown*10">
-          <span>{{ countdown }}</span>
-        </v-progress-circular>
-      </v-col>
     </v-row>
-    <v-row>
-      <v-btn color="primary" @click="submit()">{{ $t("quizz.btnNext")}}</v-btn>
+    <v-row justify="end">
+      <v-col class="btn-next">
+        <v-btn color="primary" @click="submit()">{{ $t("quizz.btnNext")}}</v-btn>
+      </v-col>
     </v-row>
   </v-container>
 </template>
@@ -70,7 +72,6 @@ export default {
       }
     },
     quizzItem: function() {
-      console.log("new quizzItem");
       this.dataAvailable = true;
       this.answer = "";
       this.countdown = 10;
@@ -110,6 +111,24 @@ export default {
 </script>
 
 <style>
+.quizz-title {
+  margin: auto;
+  margin-bottom: 2rem;
+}
+.quizz-question {
+  min-height: 20rem
+}
+.countdown-col {
+  /* to make margin: auto work */
+  display: flex 
+}
+.countdown {
+  margin: auto;
+  text-align: center;
+}
+.btn-next {
+  text-align: center;
+}
 .loading {
   margin: auto;
   margin-top: 5rem;

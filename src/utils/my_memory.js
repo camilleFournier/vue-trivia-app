@@ -32,11 +32,11 @@ async function translateQuestion(quizzItem) {
         })
 }
 
-async function translateCategories(categories) {
+async function translateCategories(categories, lang) {
     return api
         .get('', {
             params: {
-                langpair: "en|fr",
+                langpair: `en|${lang}`,
                 q: categories.map(cat => cat.name).join('|')
             }
         }).then(response => {
