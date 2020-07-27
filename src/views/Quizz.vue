@@ -78,19 +78,18 @@ export default {
   name: "Quizz",
   data: () => {
     return {
-      category: null,
       quizzItem: {},
       answer: "",
       index: 1,
       dataAvailable: false,
       countdown: 0,
-      willCountdown: null
+      willCountDown: null
     };
   },
   watch: {
     countdown: function(newCountdown) {
       if (newCountdown > 0) {
-        this.willCountdown = setTimeout(() => this.countdown--, 1000);
+        this.willCountDown = setTimeout(() => this.countdown--, 1000);
       } else {
         this.submit();
       }
@@ -100,7 +99,7 @@ export default {
       this.answer = "";
       //prevent behavior of countdown frozen when next is pressed too quickly
       if (this.countdown == 10) {
-        this.willCountdown = setTimeout(() => this.countdown--, 1000);
+        this.willCountDown = setTimeout(() => this.countdown--, 1000);
       } else {
         this.countdown = 10;
       }
@@ -149,7 +148,7 @@ export default {
         index: this.index - 1,
         answer: this.answer
       });
-      clearTimeout(this.willCountdown);
+      clearTimeout(this.willCountDown);
       this.index++;
       this.next();
     },

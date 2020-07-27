@@ -12,6 +12,14 @@ const api = axios.create({
   }
 });
 
+/**
+ * 
+ * @param {Object} quizzItem
+ * @param {String} quizzItem.question - html-encoded question
+ * @param {String} quizzItem.correct - html-encoded correct answer
+ * @param {Array} quizzItem.incorrect - html-encoded incorrect answers
+ * @returns {Object} quizzItem with translated strings
+ */
 async function translateQuestion(quizzItem) {
   const q = `${quizzItem.question}|${quizzItem.incorrect.join("|")}|${
     quizzItem.correct
@@ -33,6 +41,12 @@ async function translateQuestion(quizzItem) {
     });
 }
 
+/**
+ * 
+ * @param {Array} categories - array of categories available {id, name}
+ * @param {String} lang - code of language to translate into (ex: en for english, fr for french) 
+ * @returns {Array} categories available translated
+ */
 async function translateCategories(categories, lang) {
   return api
     .get("", {

@@ -21,6 +21,12 @@ export default new Vuex.Store({
     ]
   },
   getters: {
+    /**
+     * @param {number} index - index of quizzItem requested
+     * @returns {Object} quizzItem
+     * @returns {String} quizzItem.question - html-encoded string
+     * @returns {Array} quizzItem.answers - list of possible answers. The position of the correct one is randomely defined.
+     */
     getNextQuestion: state => index => {
       const answers = state.quizz[index].incorrect;
       const i = Math.floor(Math.random() * answers.length + 1);
@@ -60,7 +66,6 @@ export default new Vuex.Store({
       } else {
         Object.assign(state.quizz[payload.index], { good_answer: false });
       }
-      console.log(state.quizz[payload.index]);
     },
     SET_ERROR(state, error) {
       state.error = true;
@@ -72,12 +77,21 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    /**
+     * Trigger the display of an error message for 5s
+     * @param {*} context - equivalent to this
+     * @param {Error|String} error - Error to display
+     */
     CATCH_ERROR(context, error) {
       context.commit("SET_ERROR", error);
       setTimeout(() => {
         context.commit("RESET_ERROR");
       }, 5000);
     },
+    /**
+     * Fetch new questions with OpenTrivia api
+     * @param {*} context - equivalent to this 
+     */
     FETCH_QUIZZ(context) {
       return new Promise((resolve, reject) => {
         trivia_api
@@ -92,6 +106,10 @@ export default new Vuex.Store({
           });
       });
     },
+    /**
+     * Fetch categories available from OpenTrivia api
+     * @param {*} context - equivalent to this
+     */
     FETCH_CATEGORIES(context) {
       return trivia_api
         .getCategories()
@@ -103,7 +121,15 @@ export default new Vuex.Store({
         })
         .catch(e => context.dispatch("CATCH_ERROR", e));
     },
+    /**
+     * Reset the english categories, or fetch the translation from MyMemory API
+     * @param {*} context - equivalent to this
+     */
     TRANSLATE_CATEGORIES(context) {
+      if (context.state.lang == "en") {
+        context.commit("SET_CATEGORIES_DISPLAYED", context.state.categories);
+        return;
+      }
       return mm_api
         .translateCategories(context.state.categories, context.state.lang)
         .then(categories =>
@@ -111,6 +137,11 @@ export default new Vuex.Store({
         )
         .catch(e => context.dispatch("CATCH_ERROR", e));
     },
+    /**
+     * Translate the question via MyMemory API. Only called when lang is not english
+     * @param {*} context - equivalent to this 
+     * @param {*} index - index of question too translate
+     */
     TRANSLATE_QUESTION(context, index) {
       return mm_api
         .translateQuestion(context.state.quizz[index], context.state.lang)
@@ -122,6 +153,12 @@ export default new Vuex.Store({
           throw new Error();
         });
     },
+    /**
+     * Calls 'TRANSLATE_QUESTION if need be, and returns quizzItem;
+     * @param {*} context - equivalent to this 
+     * @param {number} index - index of question requested
+     * @returns see getters.getNextQuuestion()
+     */
     GET_QUESTION(context, index) {
       return new Promise((resolve, reject) => {
         if (context.state.lang != "en") {

@@ -8,8 +8,6 @@ const messages = {
     fr,
     en
 };
-// Object.assign(messages, en);
-console.log(messages);
 
 export default new VueI18n({
     locale: "en",
