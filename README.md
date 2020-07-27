@@ -1,15 +1,15 @@
 # vue-trivia-app
 
 Ce projet utilise vue-cli et dépend de 5 librairies:
-    * axios: pour les requêtes API
-    * vuetify: pour les éléments graphiques
-    * vue-i18n: pour traduire les textes statiques de l'application
-    * vuex: pour maintenir un état centralisé de l'application (similaire à Redux pour React)
-    * vue-router: pour permettre le routage dans l'application
+* axios: pour les requêtes API
+* vuetify: pour les éléments graphiques
+* vue-i18n: pour traduire les textes statiques de l'application
+* vuex: pour maintenir un état centralisé de l'application (similaire à Redux pour React)
+* vue-router: pour permettre le routage dans l'application
 
 Il fait appel à 2 API:
-    * OpenTrivia (https://opentdb.com): pour récupérer les catégories et questions de quizz
-    * My Memory (https://rapidapi.com/translated/api/mymemory-translation-memory/details): pour traduire les catégories et questions de quizz
+* OpenTrivia (https://opentdb.com): pour récupérer les catégories et questions de quizz
+* My Memory (https://rapidapi.com/translated/api/mymemory-translation-memory/details): pour traduire les catégories et questions de quizz
 
 Pour faire fonctionner l'application en local, il faudra une clé pour l'API de My Memory: connectez-vous à RapidApi, prenez un abonnement gratuit à MyMemory, copiez la clé et définissez la variable d'environnement VUE_APP_MM_API_KEY.
 
