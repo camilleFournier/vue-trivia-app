@@ -29,16 +29,21 @@ Dans Score, l'utilisateur visualise son score, le détails des questions posées
 ## Difficultées rencontrées
 
 ### VueJS
+
 La plus grande difficulté a été l'apprentissage de Vue.js et de Vuex et leurs concepts. Etant similaire à ReactJS, il est tentant d'appliquer directement la logique de React sur Vue (le state de React = data de Vue, les méthodes de React.component = methods de Vue). Cependant, cela ne permet pas d'exploiter tout le potentiel de VueJS (e.g. lier un input et un data avec un simple v-model sans coder la mise à jour du data).
 
 Cette application est une première approche du framework et essaie d'exploiter les fonctionnalités offertes par VueJS et Vuex, bien qu'elle pourrait sûrement être améliorée avec plus de temps et d'expertise.
 
 ### Librairie Graphique
+
 La première bibliothèque utilisée pour les éléments graphiques était vue-material. Cependant, je n'ai pas réussi à définir un thème de couleur personnalisé. Ce problème vient apparement d'un problème de compatibilité entre les versions actuelles de vue-material et node-sass que je n'ai pas pu résoudre. Je suis donc passée sous Vuetify.
 
 ### Vuetify
+
 Au cours de son utilisation, j'ai remarqué 2 problèmes avec Vuetify. Ceux-ci n'empêche pas son bon fonctionnement, mais une autre bibbliothèque pourrait être mieux adaptée.
+
 Tout d'abord, toute la bibliothèque d'icones est téléchargée au lancement de l'application même lorsqu'une petite partie est utilisée, ce qui entraîne une baisse de performance au démarrage.
+
 Ensuite, les évenements générés par le clavier ne semble pas disponible pour les différents éléments inputs de Vuetify. J'ai essayé d'ajouter un raccourci clavier 'Enter' pour passer à la question suivante du quizz (avec la méthode Vue, ou directement element.addEventListener) mais sans succès. Cependant, le temps manquait pour étudier ce problème en profondeur. Il existe peut-etre un moyen détourné. 
 
 
