@@ -18,8 +18,11 @@ Vous pouvez aussi tester l'application déployée sur : https://nervous-roentgen
 ## Description de l'application
 
 L'application contient 3 écrans différents: Home, Quizz et Score.
+
 Dans Home, l'utilisateur peut paramétrer dans Home la catégorie et la langue utilisée pour les questions. En changeant le paramètre de langue, le texte de l'application change automatiquement. Un bouton permet de commencer le quizz.
+
 Dans Quizz, l'utilisateur répond une par une à une série de 10 questions. Chaque question comporte 4 réponses possibles. L'application passe automatiquement à la question suivante au bout de 10s. Une barre de progression linéaire (et le numéro de la question) indique de l'avancement du quizz. Un cercle de progression (et un chiffre) indique le temps restant pour répondre. 
+
 Dans Score, l'utilisateur visualise son score, le détails des questions posées et les bonnes réponses. Les bonnes réponses apparaissent en vert si l'utilisateur avait juste et rouge sinon. 2 boutons permettent de refaire un quizz: un bouton redirige l'utilisateur vers l'accueil pour changer les paramètres, et l'autre recommence un nouveau quizz directemnt.  
 
 
@@ -27,6 +30,7 @@ Dans Score, l'utilisateur visualise son score, le détails des questions posées
 
 ### VueJS
 La plus grande difficulté a été l'apprentissage de Vue.js et de Vuex et leurs concepts. Etant similaire à ReactJS, il est tentant d'appliquer directement la logique de React sur Vue (le state de React = data de Vue, les méthodes de React.component = methods de Vue). Cependant, cela ne permet pas d'exploiter tout le potentiel de VueJS (e.g. lier un input et un data avec un simple v-model sans coder la mise à jour du data).
+
 Cette application est une première approche du framework et essaie d'exploiter les fonctionnalités offertes par VueJS et Vuex, bien qu'elle pourrait sûrement être améliorée avec plus de temps et d'expertise.
 
 ### Librairie Graphique
