@@ -15,9 +15,9 @@
     </v-row>
     <v-row>
       <v-col>
-        <v-container>
+        <v-container fluid>
           <v-row v-for="item in quizz" :key="item.question" justify="start">
-            <v-col align-self="center" cols="12" md="9" lg="6">
+            <v-col align-self="center" cols="12" md="6">
               <span v-html="item.question"></span>
             </v-col>
             <v-col align-self="center">
@@ -31,13 +31,13 @@
         </v-container>
       </v-col>
     </v-row>
-    <v-row>
+    <v-row justify="start">
       <v-col cols="12" md="6">
         <v-btn color="primary" @click="resetQuizz()">{{
           $t("score.btnReset")
         }}</v-btn>
       </v-col>
-      <v-col cols="12" md="6">
+      <v-col>
         <v-btn color="primary" @click="goHome()">{{
           $t("score.btnGoHome")
         }}</v-btn>

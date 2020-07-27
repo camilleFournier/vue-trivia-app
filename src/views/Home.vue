@@ -29,7 +29,9 @@
           item-value="id"
           v-model="category"
         >
-          <template slot="label"><span>{{ $t('home.labelCategory') }}</span></template>
+          <template slot="label"
+            ><span>{{ $t("home.labelCategory") }}</span></template
+          >
         </v-select>
         <v-select
           class="lang selector"
@@ -45,15 +47,15 @@
     </v-row>
     <v-row>
       <v-col>
-        <v-btn color="primary" @click="startQuizz()">{{ $t("home.btnStart") }} !</v-btn>
+        <v-btn color="primary" @click="startQuizz()"
+          >{{ $t("home.btnStart") }} !</v-btn
+        >
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-// import { trivia_api } from "../utils/trivia.js";
-
 export default {
   name: "Home",
   data: () => {
@@ -63,24 +65,26 @@ export default {
     };
   },
   computed: {
-    langAvailable() { return  this.$store.state.langAvailable },
-    categories() { return this.$store.state.categoriesDisplayed }
+    langAvailable() {
+      return this.$store.state.langAvailable;
+    },
+    categories() {
+      return this.$store.state.categoriesDisplayed;
+    }
   },
   watch: {
     lang: function(newLang) {
-      console.log(newLang);
-      this.$store.commit('SET_LANG', newLang);
+      this.$store.commit("SET_LANG", newLang);
       this.$i18n.locale = newLang;
-      this.$store.dispatch('TRANSLATE_CATEGORIES');
+      this.$store.dispatch("TRANSLATE_CATEGORIES");
     }
   },
   components: {},
   async beforeMount() {
-    this.$store.dispatch('FETCH_CATEGORIES');
+    this.$store.dispatch("FETCH_CATEGORIES");
   },
   methods: {
     async startQuizz() {
-      console.log(this.category);
       this.$store.commit("SET_CATEGORY", this.category);
       this.$router.push("/quizz");
     }
@@ -95,6 +99,5 @@ export default {
 .selector {
   max-width: 30rem !important;
   margin: auto;
-  /* margin: auto; */
 }
 </style>

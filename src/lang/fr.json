@@ -1,7 +1,7 @@
 {
     "home": {
         "title": "Bienvenue",
-        "presentation": "Ce jeu est un quizz Trivia. Pour jouer, choisissez une catégorie (ou pas) et appuez sur commencer. Vous devrez répondre à 10 questions.",
+        "presentation": "Ce jeu est un quizz Trivia de 10 questions. Pour jouer, choisissez une catégorie (ou pas) et appuez sur commencer. Vous aurez 10s pour répondre à chaque question.",
         "labelCategory": "Categorie",
         "labelLanguage": "Langue",
         "btnStart": "Commencer"

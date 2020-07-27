@@ -5,11 +5,9 @@ const api = axios.create({
 });
 
 async function getCategories() {
-  return api
-    .get("/api_category.php")
-    .then(response => {
-      return response.data.trivia_categories;
-    })
+  return api.get("/api_category.php").then(response => {
+    return response.data.trivia_categories;
+  });
 }
 
 async function getQuizz(category) {
@@ -24,25 +22,21 @@ async function getQuizz(category) {
     .then(response => {
       switch (response.data.response_code) {
         case 0:
-          console.log(response.data.results);
           return response.data.results.map(item => {
-            console.log(item.incorrect_answers);
             return {
               question: item.question,
               correct: item.correct_answer,
-              incorrect: item.incorrect_answers,
+              incorrect: item.incorrect_answers
             };
           });
         case 1:
-          throw new Error('Not enough questions available');
+          throw new Error("Not enough questions available");
         case 2:
-          throw new Error('Invalid parameters');
+          throw new Error("Invalid parameters");
         default:
-          throw new Error('Token error');
-
+          throw new Error("Token error");
       }
-      
-    })
+    });
 }
 
 export const trivia_api = {

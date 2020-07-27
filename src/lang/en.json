@@ -1,7 +1,7 @@
 {
     "home": {
         "title": "Welcome",
-        "presentation": "This game is a Trivia quizz. To play, select a category (or not), then press start. You will have to answer 10 questions.",
+        "presentation": "This game is a Trivia quizz of 10 questions. To play, select a category (or not), then press start. You will have 10s to answer each question.",
         "labelCategory": "Category",
         "labelLanguage": "Language",
         "btnStart": "Start"

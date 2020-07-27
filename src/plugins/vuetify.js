@@ -8,6 +8,7 @@ import Vuetify, {
   VRadio,
   VRadioGroup,
   VProgressCircular,
+  VProgressLinear,
   VDialog
 } from "vuetify/lib";
 
@@ -21,6 +22,7 @@ Vue.use(Vuetify, {
     VRadio,
     VRadioGroup,
     VProgressCircular,
+    VProgressLinear,
     VDialog
   }
 });
@@ -33,5 +35,5 @@ export default new Vuetify({
         secondary: "#2c3e50"
       }
     }
-  },
+  }
 });
