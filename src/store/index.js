@@ -106,7 +106,8 @@ export default new Vuex.Store({
     TRANSLATE_CATEGORIES(context) {
       return mm_api
         .translateCategories(context.state.categories)
-        .then((categories) => context.commit("SET_CATEGORIES_DISPLAYED", categories));
+        .then((categories) => context.commit("SET_CATEGORIES_DISPLAYED", categories))
+        .catch((e) => context.dispatch("CATCH_ERROR", e));
     },
     TRANSLATE_QUESTION(context, index) {
       return mm_api

@@ -5,7 +5,7 @@ const api = axios.create({
     headers: {
         "content-type": "application/octet-stream",
         "x-rapidapi-host": "translated-mymemory---translation-memory.p.rapidapi.com",
-        "x-rapidapi-key": "19af3c0aa3mshfe439abbf55e681p1cccecjsnb355b2253668",
+        "x-rapidapi-key": process.env.VUE_APP_MM_API_KEY,
         "useQueryString": true
     }
 });
